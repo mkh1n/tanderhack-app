@@ -11,7 +11,7 @@ env:
   DOCKER_IMAGE_TAG: latest
   REMOTE_SERVER: tanderhack.ru
   REMOTE_USER: hacker
-  REMOTE_PATH: /path/to/your/app
+  REMOTE_PATH: /home/hacker/tanderhack
 
 jobs:
   build:

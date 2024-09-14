@@ -7,9 +7,11 @@ import { addMessage } from '../slices/messagesSlice';
 import routes from '../routes'
 import axios from 'axios';
 import { selectSelectedChapter } from '../slices/contractSlice';
+import { setSelectedChapter } from '../slices/contractSlice';
 
-const postMessage = async (dispatch, newMessage) => {
+export const postMessage = async (dispatch, newMessage) => {
   const res = await axios.post(routes.messagesPath(), newMessage);
+  dispatch(setSelectedChapter(""));
   dispatch(addMessage(newMessage)); /* eslint-disable-line */
   return res.data;
 };

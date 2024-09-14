@@ -1,7 +1,6 @@
 import { Anchorme } from 'react-anchorme';
 import { useDispatch } from 'react-redux';
-import { addMessage } from '../slices/messagesSlice';
-
+import { postMessage } from './MessagesForm';
 const Message = ({
   // eslint-disable-next-line react/prop-types
   username, body, options
@@ -19,7 +18,7 @@ const Message = ({
       id: (new Date()).getTime(),
       body: messageText,
     }
-    dispatch(addMessage(newMessage))
+    postMessage(dispatch, newMessage)
   }
 
   const renderButtons = () => {

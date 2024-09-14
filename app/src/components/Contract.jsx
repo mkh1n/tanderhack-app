@@ -26,11 +26,14 @@ const Contract = () => {
   const renderContract = () => {
     console.log(contractData)
     return  <>
-    <h4>{contractData.title}</h4>
+    <h4 id="contractTitle">{contractData.title}</h4>
     {contractData.chapters.map((chapter)=><div className="contractChapter"
     onClick={selectChapter(chapter.title)}
     key={chapter.chapter_no}>
-      {chapter.title}
+      <b>{chapter.title}</b>
+      <div>
+        {chapter.content}
+      </div>
     </div>)}
     </>
   }

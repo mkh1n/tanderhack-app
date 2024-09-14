@@ -23,6 +23,7 @@ h4 {
   background-color: #cce2ff;
   padding: 20px 40px;
   gap: 20px;
+  min-height: 100vh;
 }
 
 #chat {
@@ -42,8 +43,7 @@ h4 {
 }
 .contractChapter:hover{
   box-sizing: border-box;
-  border-radius: 10px;
-  background-color: #ffe3e8;
+  background-color: #e7eef7;
   padding: 5px;
 }
 #selectedChapter{
@@ -57,6 +57,7 @@ h4 {
     background: red;
     width: 100%;
     position: relative;
+    transition: 0.2s;
 }
 #closeSelectedChapter{
   color: white;
@@ -68,7 +69,8 @@ h4 {
   cursor: pointer;
 }
 .hide{
-  display: none !important;
+  height: 0px !important;
+  opacity: 0;
 }
 #contract {
   background-color: rgb(255, 255, 255);
@@ -79,7 +81,6 @@ h4 {
 
 #contractTextBlock {
   padding: 20px;
-
 }
 
 #contractHeader,
@@ -91,7 +92,10 @@ h4 {
   padding: 20px 0;
   border-bottom: 3px solid #FD4355;
 }
-
+#contractTitle{
+  text-align: center;
+  margin-bottom: 10px !important;
+}
 #headerIcon {
   height: 30px;
   margin-right: 10px;
