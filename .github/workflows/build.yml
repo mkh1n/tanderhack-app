@@ -36,6 +36,7 @@ jobs:
         with:
           push: true
           tags: ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
+          file: ./app/Dockerfile 
 
       - name: Deploy to Remote Server
         uses: appleboy/ssh-action@master
