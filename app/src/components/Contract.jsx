@@ -5,7 +5,7 @@ import { selectContract } from '../slices/contractSlice';
 import { useDispatch } from 'react-redux';
 import { setContract, setSelectedChapter } from '../slices/contractSlice';
 import axios from 'axios';
-import { selectSelectedChapter } from './slices/contractSlice';
+import { selectSelectedChapter } from '../slices/contractSlice';
 
 const Contract = () => {
   const contractData = useSelector(selectContract);
