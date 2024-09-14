@@ -35,7 +35,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ${{ env.DOCKER_IMAGE_NAME }}::${{ env.DOCKER_IMAGE_TAG }}
+          tags: ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
 
       - name: Deploy to Remote Server
         uses: appleboy/ssh-action@master
