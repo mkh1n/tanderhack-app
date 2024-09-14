@@ -5,9 +5,11 @@ import { selectContract } from '../slices/contractSlice';
 import { useDispatch } from 'react-redux';
 import { setContract, setSelectedChapter } from '../slices/contractSlice';
 import axios from 'axios';
+import { selectSelectedChapter } from './slices/contractSlice';
 
 const Contract = () => {
   const contractData = useSelector(selectContract);
+  const selectedChapter = useSelector(selectSelectedChapter)
   console.log(contractData)
   const dispatch = useDispatch();
 
@@ -21,7 +23,11 @@ const Contract = () => {
   }, []);
 
   const selectChapter = (chapterTitle) => () => {
-    dispatch(setSelectedChapter(chapterTitle))
+    if(chapterTitle == selectedChapter){
+      dispatch(setSelectedChapter(""))
+    } else {
+      dispatch(setSelectedChapter(chapterTitle))
+    }
   }
   const renderContract = () => {
     console.log(contractData)
