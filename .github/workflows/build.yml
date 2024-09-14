@@ -12,7 +12,8 @@ env:
   REMOTE_SERVER: tanderhack.ru
   REMOTE_USER: hacker
   REMOTE_PATH: /home/hacker/tanderhack
-  CONTAINER_NAME: tanderhack  # New valid container name
+  CONTAINER_NAME: tanderhack
+  CONTAINER_PORT: 8080  
 
 jobs:
   build:
@@ -47,6 +48,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             docker pull ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
-            docker stop ${{ env.CONTAINER_NAME }} || true
-            docker rm ${{ env.CONTAINER_NAME }} || true
-            docker run -d --name ${{ env.CONTAINER_NAME }} -p 80:80 ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
+            if [ "$(docker ps -aq -f name=${{ env.CONTAINER_NAME }})" ]; then
+              docker stop ${{ env.CONTAINER_NAME }}
+              docker rm ${{ env.CONTAINER_NAME }}
+            fi
+            docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:80 ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
