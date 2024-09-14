@@ -1,0 +1,310 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+html,
+body,
+#root,
+#mainContainer {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", sans-serif;
+}
+
+h4 {
+  font-size: 20px !important;
+  margin: 0 !important;
+}
+
+#mainContainer {
+  display: flex;
+  flex-direction: row;
+  background-color: #cce2ff;
+  padding: 20px 40px;
+  gap: 20px;
+}
+
+#chat {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  max-height: 700px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  flex: 1;
+}
+
+#contract {
+  background-color: rgb(255, 255, 255);
+  min-height: 80vh;
+  flex: 2;
+  border-radius: 10px;
+}
+
+#contractTextBlock {
+  padding: 20px;
+
+}
+
+#contractHeader,
+#messagesHeader {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+  border-bottom: 3px solid #FD4355;
+}
+
+#headerIcon {
+  height: 30px;
+  margin-right: 10px;
+}
+
+#sendButton {
+  align-self: end;
+  height: 40px;
+  padding: 0;
+  width: 40px;
+  align-items: center;
+  display: flex;
+  background-position: top;
+  border-radius: 50px;
+  background: transparent;
+  border: none;
+}
+
+#sendIcon {
+  height: 27px;
+  width: 27px;
+  filter: invert(32%) sepia(97%) saturate(5931%) hue-rotate(344deg) brightness(96%) contrast(113%);
+}
+
+#sendIcon.disabled {
+  filter: unset !important;
+}
+
+#sendInput {
+  max-height: 250px !important;
+}
+
+#sendInput:focus {
+  outline: none;
+}
+
+#sendForm {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: none !important;
+  padding-bottom: 0px !important;
+}
+
+#sendForm textarea {
+  background-color: #ffffff;
+  height: 100%;
+  width: 100%;
+  color: #000;
+}
+
+#sendInputHolder {
+  padding: 8px;
+}
+
+#messages-box {
+  display: flex;
+  position: relative;
+  flex-direction: column-reverse;
+  justify-content: end;
+  border-bottom: 2px solid #FD4355;
+}
+
+#messages-box::-webkit-scrollbar {
+  width: 8px;
+}
+
+#messages-box::-webkit-scrollbar-track {
+  background-color: #DDDFE0;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+#messages-box::-webkit-scrollbar-thumb {
+  background: #FD1127;
+  border-radius: 10px;
+}
+
+.messagesPadding {
+  padding: 16px;
+}
+.messageHolder{
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0;
+}
+.message {
+  padding: 7px;
+  font-size: 15px;
+  position: relative;
+  transition: .2s;
+  background: #ebebeb;
+  width: fit-content;
+  position: relative;
+  border-radius: 6px 6px 6px 1px;
+  min-width: 20%;
+  max-width: 90%;
+  font-family: 'Montserrat' !important;
+}
+
+.messageButtonsHolder {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); 
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.messageButton {
+  border: none;
+  border: 1px solid #DDDDDD;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  text-align: center;
+  margin: 0px !important;
+  color: #FD1127 !important;
+  background-color: #ffffff !important;
+  padding: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.1s;
+  width: 100%; /* Кнопка занимает всю ширину своей ячейки */
+  }
+.messageButton:hover{
+  color:  #ffffff!important;
+  background-color:#FD1127 !important;
+}
+.fromMe {
+  border-radius: 6px 6px 1px 6px;
+  background-color: #EBEBEB;
+  color: #000000;
+  align-self: end;
+}
+
+.fromMe>.usernameBlock {
+  left: unset !important;
+  right: 5px;
+}
+
+.fromMe a {
+  color: #3f65ff !important;
+}
+
+.innerMessage {
+  display: flex;
+  flex-direction: column;
+}
+
+.innerMessage a {
+  color: #000;
+}
+
+.usernameBlock {
+  position: absolute;
+  top: -18px;
+  color: gray;
+  left: 5px;
+  font-size: 12px;
+  width: max-content;
+}
+
+@media screen and (max-width: 650px) {
+  #mainContainer {
+    flex-direction: column;
+  }
+
+  #chat {
+    order: 2;
+    width: 100%;
+  }
+
+  #contract {
+    order: 1;
+    width: 100%;
+  }
+
+  #mobileContainer {
+    box-sizing: border-box;
+    height: unset !important;
+    width: unset !important;
+  }
+
+  #sendInput {
+    max-height: 200px !important;
+  }
+
+  .message {
+    max-width: 85%;
+    margin: 12px 0;
+  }
+
+  .messagesPadding {
+    padding: 5px !important;
+  }
+
+  #sendInputHolder {
+    padding-bottom: 5px !important;
+  }
+
+  #burgerButton {
+    display: block;
+    transform-origin: 16px 11px;
+    float: left;
+    margin-right: 29px;
+    outline: 0;
+    border: 0;
+    padding: 12px;
+    background: none;
+  }
+
+  #burgerButton span {
+    background-color: #0d6efd;
+    display: block;
+    height: 4px;
+    border-radius: 3px;
+    margin-bottom: 3px;
+    width: 33px;
+  }
+
+  #burgerButton:focus {
+    border: none !important;
+    outline: 0;
+  }
+
+  #channelsHolder {
+    position: absolute;
+    transform: translateX(-100%);
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    z-index: 100;
+    height: calc(100% - 51px) !important;
+    width: 50% !important;
+  }
+
+  #channelsHolder.open {
+    transform: translateX(0) !important;
+  }
+
+  #scrollDownButton {
+    right: 2%;
+  }
+
+  .channelName+.dropdown,
+  .dropdown {
+    display: unset !important;
+  }
+
+  .modal {
+    top: -100px !important;
+  }
+}
