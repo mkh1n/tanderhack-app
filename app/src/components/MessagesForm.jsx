@@ -2,19 +2,16 @@ import { useFormik } from 'formik';
 import { useState, useEffect, useRef } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import {Form, Button} from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addMessage } from '../slices/messagesSlice';
-// import routes from '../../routes';
+import routes from '../routes'
+import axios from 'axios';
+import { selectSelectedChapter } from '../slices/contractSlice';
 
 const postMessage = async (dispatch, newMessage) => {
-  // const res = await axios.post(routes.messagesPath(), newMessage, {
-  //   headers: {
-  //     Authorization: `Bearer ${token}`,
-  //   },
-  // });
-  // return res.data;
+  const res = await axios.post(routes.messagesPath(), newMessage);
   dispatch(addMessage(newMessage)); /* eslint-disable-line */
-
+  return res.data;
 };
 
 const MessageForm = () => {
@@ -24,6 +21,8 @@ const MessageForm = () => {
   const [isMobileKeyboard, setIsMobileKeyboard] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const dispatch = useDispatch();
+  const selectedChapter = useSelector(selectSelectedChapter);
+  console.log(selectedChapter)
   // eslint-disable-next-line consistent-return
   useEffect(() => { /* eslint-disable-line */
     if ('virtualKeyboard' in navigator) {
@@ -59,12 +58,14 @@ const MessageForm = () => {
 
   const f = useFormik({
     onSubmit: (values) => {
-      if (values.messageText === '') { /* empty */ } else { /* eslint-disable-line */
+      if (values.messageText !== '') {
         setIsSending(true); /* eslint-disable-line */
+        const messageText = selectedChapter.length !== 0 ? selectedChapter + '/n' + values.messageText : values.messageText;
         const newMessage = {
-          body: values.messageText,
+          body: messageText,
           username: "you",
-          id: (new Date()).getTime()
+          id: (new Date()).getTime(),
+          options: null,
         };
         values.messageText = ''; /* eslint-disable-line */
         postMessage(dispatch, newMessage).then(() => { /* eslint-disable-line */

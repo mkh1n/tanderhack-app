@@ -1,17 +1,15 @@
-/* eslint-disable no-useless-catch */
 import { Anchorme } from 'react-anchorme';
 import { useDispatch } from 'react-redux';
+import { addMessage } from '../slices/messagesSlice';
 
 const Message = ({
   // eslint-disable-next-line react/prop-types
-  username, body, id
+  username, body, options
 }) => {
   const isMessageMine = username === 'you';
   const dispatch = useDispatch()
-  console.log(id, body)/* eslint-disable-line */
   // eslint-disable-next-line react/prop-types
   const lines = body.split('\n').map((line, index) => (
-    // eslint-disable-next-line react/no-array-index-key
     <div key={index}><Anchorme target="_blank">{line}</Anchorme></div>
   ));
 
@@ -24,15 +22,16 @@ const Message = ({
     dispatch(addMessage(newMessage))
   }
 
-  const renderButtons = (message) => {
-    if (message.hasButtons) {
+  const renderButtons = () => {
+    if (options) {
       return <div className='messageButtonsHolder'>
         {
-          message.buttons.map((button) => {
+          // eslint-disable-next-line react/prop-types
+          options.map((option) => {
             return <div key={(new Date()).getTime()} 
               className='messageButton' 
-              onClick={handleButtonClick(button.text)}>
-                {button.text}
+              onClick={handleButtonClick(option.text)}>
+                {option.text}
               </div>
           })
         }

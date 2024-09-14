@@ -34,7 +34,42 @@ h4 {
   background-color: #ffffff;
   flex: 1;
 }
+.contractChapter{
+  border-radius: 10px;
+  transition: 0.2s;
+  cursor: pointer;
 
+}
+.contractChapter:hover{
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-color: #ffe3e8;
+  padding: 5px;
+}
+#selectedChapter{
+  display: flex;
+    font-weight: bold;
+    justify-content: start;
+    align-items: center;
+    padding-left: 10px;
+    color: white;
+    height: 56px;
+    background: red;
+    width: 100%;
+    position: relative;
+}
+#closeSelectedChapter{
+  color: white;
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  filter: invert(100%);
+  right: 10px;
+  cursor: pointer;
+}
+.hide{
+  display: none !important;
+}
 #contract {
   background-color: rgb(255, 255, 255);
   min-height: 80vh;
