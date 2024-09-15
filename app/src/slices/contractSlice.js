@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  contractData: {},
-  contractId: '',
+  contract: {},
+  currentContractId: null,
   selectedChapter: '',
+  contractList: {}
 }
 
 const slice = createSlice({
@@ -11,27 +12,32 @@ const slice = createSlice({
   initialState,
   reducers: {
     setContract: (state, { payload }) => {
-      state.contractData = payload
+      state.contract = payload
     },
-    setContractId: (state, { payload }) => {
-      state.contractId = payload
+    setCurrentContractId: (state, { payload }) => {
+      state.currentContractId = payload
     },
     setSelectedChapter: (state, { payload }) => {
       state.selectedChapter = payload;
+    },
+    setContractList: (state, { payload }) => {
+      state.contractList = payload;
     }
   },
 });
 
 export const {
   setContract,
-  setContractId, 
-  setSelectedChapter
+  setCurrentContractId, 
+  setSelectedChapter,
+  setContractList
 } = slice.actions;
 
 export default slice.reducer;
 
-export const selectContract = (state) => state.contract.contractData;
-export const selectContractId = (state) => state.contract.contractid;
+export const selectContract = (state) => state.contract.contract;
+export const selectCurrentContractId = (state) => state.contract.currentContractId;
 export const selectSelectedChapter = (state) => state.contract.selectedChapter;
+export const selectContractList = (state) => state.contract.contractList;
 
 

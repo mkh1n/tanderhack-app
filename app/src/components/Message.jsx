@@ -1,24 +1,25 @@
 import { Anchorme } from 'react-anchorme';
-import { useDispatch } from 'react-redux';
-import { postMessage } from './MessagesForm';
+import axios from 'axios';
+import routes from '../routes';
+
 const Message = ({
   // eslint-disable-next-line react/prop-types
   username, body, options
 }) => {
   const isMessageMine = username === 'you';
-  const dispatch = useDispatch()
   // eslint-disable-next-line react/prop-types
   const lines = body.split('\n').map((line, index) => (
     <div key={index}><Anchorme target="_blank">{line}</Anchorme></div>
   ));
 
-  const handleButtonClick = (messageText) => () => {
+  const handleButtonClick = (messageText) => async () => {
     const newMessage = {
       username: "you",
       id: (new Date()).getTime(),
       body: messageText,
     }
-    postMessage(dispatch, newMessage)
+    const res = await axios.post(routes.messagesPath(), newMessage);
+    return res.data;
   }
 
   const renderButtons = () => {
@@ -44,7 +45,7 @@ const Message = ({
       >
         <>
           <div className="usernameBlock">
-            {isMessageMine ? "Вы" : username}
+            {isMessageMine ? "Вы" : "Помощник"}
           </div>
           <div className="innerMessage">
             {lines}

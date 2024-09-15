@@ -5,7 +5,15 @@ import Message from './Message';
 import MessagesForm from './MessagesForm';
 import { selectMessages } from '../slices/messagesSlice';
 import { selectSelectedChapter, setSelectedChapter } from '../slices/contractSlice';
+import routes from '../routes';
+import axios from 'axios';
+import { setMessages } from '../slices/messagesSlice';
 
+const fetchMessages = async (dispatch) => {
+  const res = await axios.get(routes.messagesPath());
+  dispatch(setMessages(res.data));
+  return res.data;
+}
 const Messages = () => {
   const messages = useSelector(selectMessages);
   const selectedChapter = useSelector(selectSelectedChapter);
@@ -20,12 +28,12 @@ const Messages = () => {
     }
   };
 
-
   useEffect(() => {
     Scroll();
   }, [messages]);
 
   useEffect(() => {
+    fetchMessages(dispatch)
     bottomRef.current?.scrollIntoView();
   }, []);
 

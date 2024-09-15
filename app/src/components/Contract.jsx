@@ -1,46 +1,75 @@
 import routes from '../routes';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { selectContract } from '../slices/contractSlice';
 import { useDispatch } from 'react-redux';
-import { setContract, setSelectedChapter } from '../slices/contractSlice';
 import axios from 'axios';
-import { selectSelectedChapter } from '../slices/contractSlice';
+import {
+  selectContract,
+  selectContractList,
+  selectSelectedChapter,
+  selectCurrentContractId,
+  setSelectedChapter,
+  setCurrentContractId
+} from '../slices/contractSlice';
 
 const Contract = () => {
   const contractData = useSelector(selectContract);
+  const contractList = useSelector(selectContractList);
+
+  const contractId = useSelector(selectCurrentContractId);
   const selectedChapter = useSelector(selectSelectedChapter)
-  console.log(contractData)
   const dispatch = useDispatch();
 
-  const getContractData = async (dispatch) => {
-      const res = await axios.get(routes.contractPath(111));
-      dispatch(setContract(res.data));  
-      return res.data;
+  const getContractData = async (id) => {
+    const res = await axios.get(routes.contractPath(id));
+    return res.data;
   };
-  useEffect(() => { 
-    getContractData(dispatch);
-  }, []);
+  const getContractList = async () => {
+    const res = await axios.get(routes.contractsPath());
+    return res.data;
+  };
+
+  useEffect(() => {
+    if (contractId) {
+      getContractData(contractId);
+    } else {
+      getContractList();
+    }
+  }, [contractId]);
 
   const selectChapter = (chapterTitle) => () => {
-    if(chapterTitle == selectedChapter){
+    if (chapterTitle == selectedChapter) {
       dispatch(setSelectedChapter(""))
     } else {
       dispatch(setSelectedChapter(chapterTitle))
     }
   }
-  const renderContract = () => {
-    console.log(contractData)
-    return  <>
-    <h4 id="contractTitle">{contractData.title}</h4>
-    {contractData.chapters.map((chapter)=><div className="contractChapter"
-    onClick={selectChapter(chapter.title)}
-    key={chapter.chapter_no}>
-      <b>{chapter.title}</b>
-      <div>
-        {chapter.content}
+  
+  const renderContractList = () => {
+    console.log(contractList)
+    return Object.values(contractList).map((contract) => 
+    <div className="card" key={contract.doc_id}
+        onClick={setCurrentContractId(contract.doc_id)}
+      >
+        <div className="card-body">
+          {contract.title}
+          Договор №{contract.doc_id}
+        </div>
       </div>
-    </div>)}
+    )
+  }
+
+  const renderContract = () => {
+    return <>
+      <h4 id="contractTitle">{contractData.title}</h4>
+      {contractData.chapters.map((chapter) => <div className="contractChapter"
+        onClick={selectChapter(chapter.title)}
+        key={chapter.chapter_no}>
+        <b>{chapter.title}</b>
+        <div>
+          {chapter.content}
+        </div>
+      </div>)}
     </>
   }
   return <div id="contract">
@@ -49,7 +78,7 @@ const Contract = () => {
       <h4>Дополнительное соглашение</h4>
     </div>
     <div id="contractTextBlock">
-      {Object.keys(contractData).length === 0 ? '...' : renderContract()}
+      {contractId ? Object.keys(contractList).length == 0 ? renderContract() : '' : renderContractList()}
     </div>
   </div>
 }

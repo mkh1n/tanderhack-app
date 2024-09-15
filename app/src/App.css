@@ -5,8 +5,6 @@ html,
 body,
 #root,
 #mainContainer {
-  height: 100vh;
-  width: 100vw;
   margin: 0;
   padding: 0;
   font-family: "Open Sans", sans-serif;
@@ -23,14 +21,15 @@ h4 {
   background-color: #cce2ff;
   padding: 20px 40px;
   gap: 20px;
-  min-height: 100vh;
+  height: 100vh;
+
 }
 
 #chat {
   display: flex;
   flex-direction: column;
   max-width: 400px;
-  max-height: 700px;
+  max-height: 98vh;
   border-radius: 10px;
   background-color: #ffffff;
   flex: 1;
@@ -261,22 +260,27 @@ h4 {
 @media screen and (max-width: 650px) {
   #mainContainer {
     flex-direction: column;
+    padding: 15px;
+    height: unset;
+
   }
 
   #chat {
     order: 2;
-    width: 100%;
+    min-width: 100%;
+    max-height: 500px;
+
   }
 
   #contract {
     order: 1;
-    width: 100%;
+    min-width: 100%;
+
   }
 
-  #mobileContainer {
-    box-sizing: border-box;
-    height: unset !important;
-    width: unset !important;
+  #contractHeader, #messagesHeader{
+    padding: 10px;
+    
   }
 
   #sendInput {
@@ -285,7 +289,8 @@ h4 {
 
   .message {
     max-width: 85%;
-    margin: 12px 0;
+    margin: 5px 0;
+    font-size: 17px;
   }
 
   .messagesPadding {
@@ -296,54 +301,4 @@ h4 {
     padding-bottom: 5px !important;
   }
 
-  #burgerButton {
-    display: block;
-    transform-origin: 16px 11px;
-    float: left;
-    margin-right: 29px;
-    outline: 0;
-    border: 0;
-    padding: 12px;
-    background: none;
-  }
-
-  #burgerButton span {
-    background-color: #0d6efd;
-    display: block;
-    height: 4px;
-    border-radius: 3px;
-    margin-bottom: 3px;
-    width: 33px;
-  }
-
-  #burgerButton:focus {
-    border: none !important;
-    outline: 0;
-  }
-
-  #channelsHolder {
-    position: absolute;
-    transform: translateX(-100%);
-    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-    z-index: 100;
-    height: calc(100% - 51px) !important;
-    width: 50% !important;
-  }
-
-  #channelsHolder.open {
-    transform: translateX(0) !important;
-  }
-
-  #scrollDownButton {
-    right: 2%;
-  }
-
-  .channelName+.dropdown,
-  .dropdown {
-    display: unset !important;
-  }
-
-  .modal {
-    top: -100px !important;
-  }
 }
