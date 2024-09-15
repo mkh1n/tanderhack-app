@@ -9,7 +9,7 @@ let isSubscribed = false;
 const subscribeToSocketEvents = () => {
   console.log(isSubscribed)
   if (!isSubscribed) {
-    socket = io("wss://api.tanderhack.ru/sockets")
+    socket = io("wss://api.tanderhack.ru/socket.io/sockets")
     socket.on('connect', () => {
       console.log('Socket connected');
     });
