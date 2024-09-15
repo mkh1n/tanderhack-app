@@ -19,7 +19,7 @@ const Message = ({
       body: messageText,
     }
     const res = await axios.post(routes.messagesPath(), newMessage);
-    
+
     return res.data;
   }
 

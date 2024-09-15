@@ -50,6 +50,7 @@ const Contract = () => {
   
   const renderContractList = () => {
     console.log(contractList)
+    getContractData(contractId);
     return Object.values(contractList).map((contract) => 
     <div className="card" key={contract.doc_id}
         onClick={dispatch(setCurrentContractId(contract.doc_id))}
@@ -63,6 +64,9 @@ const Contract = () => {
   }
 
   const renderContract = () => {
+    console.log()
+    getContractList();
+
     return <>
       <h4 id="contractTitle">{contractData.title}</h4>
       {contractData.chapters.map((chapter) => <div className="contractChapter"
@@ -81,7 +85,8 @@ const Contract = () => {
       <h4>Дополнительное соглашение</h4>
     </div>
     <div id="contractTextBlock">
-      {contractId ? Object.keys(contractList).length == 0 ? renderContract() : '' : renderContractList()}
+      {contractId ? renderContract() : renderContractList
+      }
     </div>
   </div>
 }
