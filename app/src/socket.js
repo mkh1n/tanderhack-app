@@ -1,7 +1,7 @@
 import { addMessage } from './slices/messagesSlice';
 import store from './store';
-// import { setContract, setCurrentContractId, setContractList, setSelectedChapter } from './slices/contractSlice';
-import { io } from 'socket.io-client';
+import { setContract, setCurrentContractId, setContractList, setSelectedChapter } from './slices/contractSlice';
+// import { io } from 'socket.io-client';
 
 let socket;
 let isSubscribed = false;
@@ -9,49 +9,49 @@ let isSubscribed = false;
 const subscribeToSocketEvents = () => {
   console.log(isSubscribed)
   if (!isSubscribed) {
-    socket = io("wss://api.tanderhack.ru/socket.io/sockets")
-    socket.on('connect', () => {
-      console.log('Socket connected');
-    });
-
-    socket.on('disconnect', () => {
-      console.log('Socket disconnected');
-    });
-
-    socket.on('newMessage', (payload) => {
-      store.dispatch(addMessage(payload));
-    });
-
-    // socket = new WebSocket("wss://api.tanderhack.ru/ws");
-
-    // socket.onopen = () => {
+    // socket = io("wss://api.tanderhack.ru/socket.io/sockets")
+    // socket.on('connect', () => {
     //   console.log('Socket connected');
-    // };
+    // });
+    //
+    // socket.on('disconnect', () => {
+    //   console.log('Socket disconnected');
+    // });
+    //
+    // socket.on('newMessage', (payload) => {
+    //   store.dispatch(addMessage(payload));
+    // });
 
-    // socket.onclose = () => {
-    //   console.log('Socket disconnected'); 
-    // };
+    socket = new WebSocket("wss://api.tanderhack.ru/ws/input");
 
-    // socket.onmessage = (event) => {
-    //   console.log(`Получено сообщение: ${event.data}`);
-    //   const data = JSON.parse(event.data);
-    //   console.log(data)
-    //   if (data.type === 'getContract') {
-    //     store.dispatch(setContract(data.payload.contract));
-    //     store.dispatch(setCurrentContractId(data.payload.currentContracId));
+    socket.onopen = () => {
+      console.log('Socket connected');
+    };
 
-    //   } else if (data.type === 'addMessage') {
-    //     store.dispatch(addMessage(data.payload));
-    //     store.dispatch(setSelectedChapter(""));
+    socket.onclose = () => {
+      console.log('Socket disconnected');
+    };
 
-    //   } else if (data.type === 'getContractList') {
-    //     store.dispatch(setContractList(data.payload));
-    //   }
-    // };
+    socket.onmessage = (event) => {
+      console.log(`Получено сообщение: ${event.data}`);
+      const data = JSON.parse(event.data);
+      console.log(data)
+      if (data.type === 'getContract') {
+        store.dispatch(setContract(data.payload.contract));
+        store.dispatch(setCurrentContractId(data.payload.currentContracId));
 
-    // socket.onerror = (error) => {
-    //   console.error('Socket error:', error);
-    // };
+      } else if (data.type === 'addMessage') {
+        store.dispatch(addMessage(data.payload));
+        store.dispatch(setSelectedChapter(""));
+
+      } else if (data.type === 'getContractList') {
+        store.dispatch(setContractList(data.payload));
+      }
+    };
+
+    socket.onerror = (error) => {
+      console.error('Socket error:', error);
+    };
 
     isSubscribed = true;
   }
