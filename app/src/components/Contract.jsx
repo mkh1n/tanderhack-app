@@ -52,7 +52,7 @@ const Contract = () => {
     console.log(contractList)
     return Object.values(contractList).map((contract) => 
     <div className="card" key={contract.doc_id}
-        onClick={setCurrentContractId(contract.doc_id)}
+        onClick={dispatch(setCurrentContractId(contract.doc_id))}
       >
         <div className="card-body">
           {contract.title}
