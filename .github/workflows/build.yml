@@ -39,17 +39,3 @@ jobs:
           push: true
           tags: ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
           file: ./app/Dockerfile
-
-      - name: Deploy to Remote Server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ env.REMOTE_SERVER }}
-          username: ${{ env.REMOTE_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            docker pull ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
-            if [ "$(docker ps -aq -f name=${{ env.CONTAINER_NAME }})" ]; then
-              docker stop ${{ env.CONTAINER_NAME }}
-              docker rm ${{ env.CONTAINER_NAME }}
-            fi
-            docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:80 ${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_IMAGE_TAG }}
