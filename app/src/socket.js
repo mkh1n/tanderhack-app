@@ -1,21 +1,15 @@
 import { addMessage } from './slices/messagesSlice';
 import store from './store';
-import { setContract, setCurrentContractId, setContractList, setSelectedChapter } from './slices/contractSlice';
+// import { setContract, setCurrentContractId, setContractList, setSelectedChapter } from './slices/contractSlice';
 import { io } from 'socket.io-client';
 
 let socket;
 let isSubscribed = false;
 
 const subscribeToSocketEvents = () => {
-  const getSocketUrl = () => {
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const { host } = window.location;
-    return `${protocol}//${host}`;
-  };
-  
   console.log(isSubscribed)
   if (!isSubscribed) {
-    socket = io("wss://tanderhack.ru:8080")
+    socket = io("wss://tanderhack.ru:3000")
     socket.on('connect', () => {
       console.log('Socket connected');
     });
