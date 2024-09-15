@@ -9,23 +9,26 @@ import {
   selectSelectedChapter,
   selectCurrentContractId,
   setSelectedChapter,
-  setCurrentContractId
+  setCurrentContractId,
+  setContract,
+  setContractList
 } from '../slices/contractSlice';
 
 const Contract = () => {
   const contractData = useSelector(selectContract);
   const contractList = useSelector(selectContractList);
-
   const contractId = useSelector(selectCurrentContractId);
   const selectedChapter = useSelector(selectSelectedChapter)
   const dispatch = useDispatch();
 
   const getContractData = async (id) => {
     const res = await axios.get(routes.contractPath(id));
+    dispatch(setContract(res.data))
     return res.data;
   };
   const getContractList = async () => {
     const res = await axios.get(routes.contractsPath());
+    dispatch(setContractList(res.data))
     return res.data;
   };
 

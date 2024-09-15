@@ -2,11 +2,12 @@ import { useFormik } from 'formik';
 import { useState, useEffect, useRef } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import { Form, Button } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import routes from '../routes'
 import axios from 'axios';
 import { selectSelectedChapter } from '../slices/contractSlice';
 import { selectCurrentContractId } from '../slices/contractSlice';
+import { addMessage } from '../slices/messagesSlice';
 
 
 const MessageForm = () => {
@@ -17,13 +18,15 @@ const MessageForm = () => {
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const selectedChapter = useSelector(selectSelectedChapter);
   const currentContractId = useSelector(selectCurrentContractId);
-
-  const postMessage = async (newMessage) => {  
+  const dispatch = useDispatch()
+  const postMessage = async (newMessage, dispatch) => {  
     if (selectedChapter.length !== 0){
       const res = await axios.patch(routes.contractPath(currentContractId), {chapter: selectedChapter, message: newMessage});
+      dispatch(addMessage(res.data))
       return res.data;
     } else {
       const res = await axios.post(routes.messagesPath(), newMessage);
+      dispatch(addMessage(res.data))
       return res.data;
     }
   };
@@ -71,7 +74,7 @@ const MessageForm = () => {
           options: null,
         };
         values.messageText = '';
-        postMessage(newMessage).then(() => {
+        postMessage(newMessage, dispatch).then(() => {
           setIsSending(false);
           formRef.current.focus();
         });
